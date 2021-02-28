@@ -132,6 +132,25 @@ task sourcesJar(type: Jar) {
 }
 
 publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/sousuke0422/Korgelin")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+    publications {
+        gpr(MavenPublication) {
+            from(components.java)
+        }
+    }
+}
+
+/*
+publishing {
     publications {
         mavenKotlin(MavenPublication) {
             from components.java
@@ -162,7 +181,7 @@ publishing {
         }
     }
 }
-
+*/
 /*
 if(System.getenv("bintray-api-key") != null || System.getenv()["bintray-api-key"] != null || project.hasProperty("bintrayApiKey")) {
     bintray {

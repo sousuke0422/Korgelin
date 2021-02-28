@@ -12,6 +12,6 @@ import net.minecraftforge.fml.common.Mod
 )
 object Kpatch {
     const val MOD_ID = "korgelin-patch"
-    const val NAME = "rei's korgelin patch"
+    const val NAME = "rei's Korgelin patch"
     const val VERSION = "rei.1"
 }

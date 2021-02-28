@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 object Korgelin {
     const val MOD_ID = "korgelin"
     const val NAME = "Korgelin"
-    const val VERSION = "@VERSION@"
+    const val VERSION = "1.1.0-rei.1-1.4.31"
 
     @Mod.EventHandler
     fun onPreInit(event: FMLPreInitializationEvent) {

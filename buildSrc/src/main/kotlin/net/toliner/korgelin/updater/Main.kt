@@ -15,10 +15,10 @@ import kotlin.system.exitProcess
 val client = HttpClient(CIO)
 
 val urlList = listOf(
-        "http://central.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/maven-metadata.xml",
-        "http://central.maven.org/maven2/org/jetbrains/annotations/maven-metadata.xml",
-        "http://central.maven.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-core/maven-metadata.xml",
-        "https://bintray.com/kotlin/kotlinx/download_file?file_path=org%2Fjetbrains%2Fkotlinx%2Fkotlinx-serialization-runtime%2Fmaven-metadata.xml"
+        "https://central.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/maven-metadata.xml",
+        "https://central.maven.org/maven2/org/jetbrains/annotations/maven-metadata.xml",
+        "https://central.maven.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-core/maven-metadata.xml",
+        "https://central.maven.org/maven2/org/jetbrains/kotlinx/kotlinx-serialization-runtime/maven-metadata.xml"
 )
 
 val urlToName = mapOf(

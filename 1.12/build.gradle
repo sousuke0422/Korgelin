@@ -1,14 +1,14 @@
 buildscript {
     apply from: "../buildSrc/config.gradle.kts"
     repositories {
-        jcenter()
+        mavenCentral()
         maven {
             name "forge"
             url "http://files.minecraftforge.net/maven/"
         }
     }
     dependencies {
-        classpath "net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT"
+        classpath "net.minecraftforge.gradle:ForgeGradle:3.+"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
     }
 }
@@ -22,7 +22,7 @@ plugins {
 }
 
 apply plugin: "kotlin"
-apply plugin: "net.minecraftforge.gradle.forge"
+apply plugin: 'net.minecraftforge.gradle'
 apply from: "../buildSrc/config.gradle.kts"
 
 archivesBaseName = modName + '-' + mc_version
@@ -33,20 +33,38 @@ sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
 minecraft {
-    version = mc_version + "-" + forge_version
-    runDir = "run"
+    runs {
+        client {
+            workingDirectory project.file('run')
 
-    mappings = mcp_mappings
+            // Recommended logging data for a userdev environment
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
 
-    replaceIn "Korgelin.kt"
-    replace "@VERSION@", modVersion
+            // Recommended logging level for the console
+            property 'forge.logging.console.level', 'debug'
+        }
 
-    useDepAts = true
+        server {
+
+            // Recommended logging data for a userdev environment
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+
+            // Recommended logging level for the console
+            property 'forge.logging.console.level', 'debug'
+        }
+    }
+
+    mappings channel: 'snapshot', version: '20171003-1.12'
+
+    //replaceIn "src/main/kotlin/net/toliner/korgelin/Korgelin.kt"
+    //replace "@VERSION@", modVersion
+
+    //useDepAts = true
 }
 
 processResources {
     inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
+    inputs.property "mcversion", "1.12.2"
 
     from (sourceSets.main.resources.srcDirs) {
         include "mcmod.info"
@@ -58,10 +76,11 @@ processResources {
 }
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
+    minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2855'
     implementation group: "org.jetbrains.kotlin", name: "kotlin-stdlib", version: kotlinVersion
     implementation group: "org.jetbrains.kotlin", name: "kotlin-stdlib-jdk8", version: kotlinVersion
     implementation group: "org.jetbrains.kotlin", name: "kotlin-reflect", version: kotlinVersion
@@ -102,9 +121,7 @@ artifacts {
 }
 
 reobf {
-    shadowJar {
-        mappingType = "SEARGE"
-    }
+    shadowJar {}
 }
 tasks.reobfShadowJar.mustRunAfter shadowJar
 tasks.build.dependsOn reobfShadowJar
@@ -146,6 +163,7 @@ publishing {
     }
 }
 
+/*
 if(System.getenv("bintray-api-key") != null || System.getenv()["bintray-api-key"] != null || project.hasProperty("bintrayApiKey")) {
     bintray {
         key = System.getenv("bintray-api-key") ?: System.getenv()["bintray-api-key"] ?: project.findProperty("bintrayApiKey")
@@ -165,8 +183,8 @@ if(System.getenv("bintray-api-key") != null || System.getenv()["bintray-api-key"
 } else {
     logger.log(LogLevel.WARN, "Bintray API Key was not found. Skip.")
 }
-
-
+*/
+/*
 if(System.getenv("curseforge-api-key") != null || System.getenv()["curseforge-api-key"] != null || project.hasProperty("curseforgeApiKey")) {
     curseforge {
         apiKey = System.getenv("curseforge-api-key") ?: System.getenv()["curseforge-api-key"] ?: project.findProperty("curseforgeApiKey")
@@ -181,3 +199,4 @@ if(System.getenv("curseforge-api-key") != null || System.getenv()["curseforge-ap
 } else {
     logger.log(LogLevel.WARN, "CurseForge API Key was not found. Skip.")
 }
+*/
